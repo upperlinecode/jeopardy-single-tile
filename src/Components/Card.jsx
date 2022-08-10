@@ -13,15 +13,20 @@ const Card = (props) => {
     setClickable(false);
   };
 
+  // Keep the guess in state matching the guess on screen
   const handleChange = (e) => {
     setGuess(e.target.value)
   };
-  const handleSubmit = () => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
     // Check the answer
     if (guess.toLowerCase() === answer.toLowerCase()) {
       changeScore(props.value)
+      alert("Correct!")
     } else {
       changeScore(props.value * -1)
+      alert("Sorry! The correct answer was: " + props.answer)
     }
     // Clear the guess
     setGuess("")
@@ -37,10 +42,10 @@ const Card = (props) => {
       </div>
       <div className={`card-back ${showing === "front" ? "hidden" : ""}`}>
         <p className="card-question">{props.question}</p>
-        <div className="answer-group">
+        <form className="answer-group">
           <input type="text" name="answer-box" onChange={handleChange} value={guess} />
-          <button onClick={handleSubmit}>Guess!</button>
-        </div>
+          <input type="submit" onClick={handleSubmit} value="Guess!"/>
+        </form>
       </div>
     </div>
   );

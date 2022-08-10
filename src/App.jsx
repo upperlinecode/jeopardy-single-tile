@@ -23,7 +23,8 @@ const sampleQuestion = {
 }
 
 function App() {
-  const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
+  const currentQuestion = sampleQuestion;
+  // const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
   const [score, setScore] = useState(1000);
 
   const changeScore = (x) => {
@@ -35,7 +36,7 @@ function App() {
       <h1>Category: {currentQuestion.category.title}</h1>
       <h3>Score: {score}</h3>
       <Card question={currentQuestion.question} answer={currentQuestion.answer} value={currentQuestion.value} changeScore={changeScore} />
-      <button>Next Card</button>
+      <button onClick={() => alert("under construction")}>Next Card</button>
     </div>
   );
 }
