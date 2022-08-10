@@ -17,11 +17,14 @@ const Card = (props) => {
     setGuess(e.target.value)
   };
   const handleSubmit = () => {
+    // Check the answer
     if (guess.toLowerCase() === answer.toLowerCase()) {
       changeScore(props.value)
     } else {
       changeScore(props.value * -1)
     }
+    // Clear the guess
+    setGuess("")
   }
 
   return (
