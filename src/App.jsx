@@ -24,12 +24,17 @@ const sampleQuestion = {
 
 function App() {
   const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
-  
+  const [score, setScore] = useState(0);
+
+  const changeScore = (x) => {
+    setScore(score + x);
+  }
+
   return (
     <div className="App">
       <h1>Category: {currentQuestion.category.title}</h1>
-      <h3>Score: </h3>
-      <Card question={""} answer={""} value={0}/>
+      <h3>Score: {score}</h3>
+      <Card question={currentQuestion.question} answer={currentQuestion.answer} value={currentQuestion.value} changeScore={changeScore} />
       <button>Next Card</button>
     </div>
   );

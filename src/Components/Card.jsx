@@ -4,14 +4,25 @@ import "./Card.css";
 const Card = (props) => {
   const [showing, setShowing] = useState("front");
   const [clickable, setClickable] = useState(true);
+  const [guess, setGuess] = useState("");
+  const answer = props.answer;
+  const changeScore = props.changeScore;
 
   const handleClick = () => {
     clickable && setShowing("back");
     setClickable(false);
   };
 
-  const handleChange = () => {};
-  const handleSubmit = () => {}
+  const handleChange = (e) => {
+    setGuess(e.target.value)
+  };
+  const handleSubmit = () => {
+    if (guess.toLowerCase() === answer.toLowerCase()) {
+      changeScore(props.value)
+    } else {
+      changeScore(props.value * -1)
+    }
+  }
 
   return (
     <div className="Card">
@@ -19,12 +30,12 @@ const Card = (props) => {
         className={`card-front ${showing === "back" ? "hidden" : ""}`}
         onClick={handleClick}
       >
-        <p className="card-value">VALUE</p>
+        <p className="card-value">{props.value}</p>
       </div>
       <div className={`card-back ${showing === "front" ? "hidden" : ""}`}>
-        <p className="card-question">QUESTION</p>
+        <p className="card-question">{props.question}</p>
         <div className="answer-group">
-          <input type="text" name="answer-box" onChange={handleChange} />
+          <input type="text" name="answer-box" onChange={handleChange} value={guess} />
           <button onClick={handleSubmit}>Guess!</button>
         </div>
       </div>
