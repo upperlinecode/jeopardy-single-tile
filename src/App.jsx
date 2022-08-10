@@ -25,28 +25,17 @@ const sampleQuestion = {
 function App() {
   const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
   const [score, setScore] = useState(1000);
-  const [questionNumber, setQuestionNumber] = useState(0);
 
   const changeScore = (x) => {
     setScore(score + x);
   }
-
-  useEffect(() => {
-    const endpoint = "https://jservice.io/api/random";
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setCurrentQuestion(data[0])
-      })
-  }, [questionNumber])
 
   return (
     <div className="App">
       <h1>Category: {currentQuestion.category.title}</h1>
       <h3>Score: {score}</h3>
       <Card question={currentQuestion.question} answer={currentQuestion.answer} value={currentQuestion.value} changeScore={changeScore} />
-      <button onClick={() => setQuestionNumber(questionNumber + 1)}>Next Card</button>
+      <button>Next Card</button>
     </div>
   );
 }
