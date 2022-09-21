@@ -1,43 +1,63 @@
 // import { useEffect } from 'react';
-import { useState } from 'react';
-import './App.css';
-import Card from './Components/Card';
+import { useEffect } from "react";
+import { useState } from "react";
+import "./App.css";
+import Card from "./Components/Card";
 
 const sampleQuestion = {
-  "id": 12,
-  "answer": "a catapult",
-  "question": "Ancient weapon kept a stone's throw from its target",
-  "value": 200,
-  "airdate": "1985-02-08T12:00:00.000Z",
-  "created_at": "2014-02-11T22:47:18.947Z",
-  "updated_at": "2014-02-11T22:47:18.947Z",
-  "category_id": 6,
-  "game_id": null,
-  "invalid_count": null,
-  "category": {
-      "id": 6,
-      "title": "'cat'-egory",
-      "created_at": "2014-02-11T22:47:18.750Z",
-      "updated_at": "2014-02-11T22:47:18.750Z",
-      "clues_count": 5
-  }
-}
+  id: 12,
+  answer: "a catapult",
+  question: "Ancient weapon kept a stone's throw from its target",
+  value: 200,
+  airdate: "1985-02-08T12:00:00.000Z",
+  created_at: "2014-02-11T22:47:18.947Z",
+  updated_at: "2014-02-11T22:47:18.947Z",
+  category_id: 6,
+  game_id: null,
+  invalid_count: null,
+  category: {
+    id: 6,
+    title: "'cat'-egory",
+    created_at: "2014-02-11T22:47:18.750Z",
+    updated_at: "2014-02-11T22:47:18.750Z",
+    clues_count: 5,
+  },
+};
 
 function App() {
-  const currentQuestion = sampleQuestion;
-  // const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
+  // const currentQuestion = sampleQuestion;
+  const [currentQuestion, setCurrentQuestion] = useState(sampleQuestion);
   const [score, setScore] = useState(1000);
 
   const changeScore = (x) => {
     setScore(score + x);
-  }
+  };
+
+  const getNewQuestion = async () => {
+    // make API call
+    const response = await fetch("https://jservice.io/api/random");
+    // read the response as json
+    const questions = await response.json();
+    const question = questions[0];
+    // set the state.
+    setCurrentQuestion(question);
+  };
+
+  useEffect(() => {
+    getNewQuestion();
+  }, []);
 
   return (
     <div className="App">
       <h1>Category: {currentQuestion.category.title}</h1>
       <h3>Score: {score}</h3>
-      <Card question={currentQuestion.question} answer={currentQuestion.answer} value={currentQuestion.value} changeScore={changeScore} />
-      <button onClick={() => alert("under construction")}>Next Card</button>
+      <Card
+        question={currentQuestion.question}
+        answer={currentQuestion.answer}
+        value={currentQuestion.value}
+        changeScore={changeScore}
+      />
+      <button onClick={getNewQuestion}>Next Card</button>
     </div>
   );
 }
